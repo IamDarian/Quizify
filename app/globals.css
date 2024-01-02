@@ -24,4 +24,81 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+h2 {
+  @apply font-bold text-5xl;
+}
+
+/* vibrant orange: #ff6600
+lime green: #c2ff1d
+soft blue: #3498db
+light gray: #ecf0f1 */
+
+.background_orange {
+  background-color: #ff6600;
+}
+
+.background_lime {
+  background-color: #c2ff1d;
+}
+
+.background_blue {
+  background-color: #3498db;
+}
+
+.background_gray {
+  background-color: #ecf0f1;
+}
+
+.background_darksky {
+  background-color: #39a4aa;
+}
+
+/* Hero Transition */
+.transition-opacity {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.text-red-500,
+.text-emerald-500,
+.text-sky-500,
+.text-orange-500,
+.text-purple-500 {
+  opacity: 0;
+}
+
+.text-red-500.active,
+.text-emerald-500.active,
+.text-sky-500.active,
+.text-orange-500.active,
+.text-purple-500.active {
+  opacity: 1;
+}
+
+.card_hover {
+  transition: transform 200ms;
+}
+
+.card_hover:hover {
+  transform: scale(1.01);
+}
+
+.img_hover {
+  transition: transform 200ms;
+}
+
+.card:hover .img_hover {
+  transform: scale(1.1);
 }
