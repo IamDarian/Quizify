@@ -3,11 +3,17 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function Login() {
-  const [password, setPassword] = useState("password");
+  const [visibility, setVisibility] = useState("password");
 
   function toggleVisibility() {
-    password === "password" ? setPassword("text") : setPassword("password");
+    visibility === "password"
+      ? setVisibility("text")
+      : setVisibility("password");
   }
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <main className="flex min-h-fit flex-col items-center justify-center py-10">
       <div className="card w-96 bg-blue-500 text-primary-content">
@@ -19,16 +25,20 @@ export default function Login() {
             placeholder="E-mail"
             required
             className="input input-bordered w-full max-w-xs"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label className="w-full text-left relative">
             Password:{" "}
             <input
-              type={password}
+              type={visibility}
               placeholder="Password"
               required
               className="input input-bordered text-slate-500 focus:text-slate-900 w-full max-w-xs mt-2"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
-            {password === "text" ? (
+            {visibility === "text" ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="21"
@@ -53,9 +63,7 @@ export default function Login() {
             )}
           </label>
           <div className="card-actions justify-end">
-            <button className="btn my-4" onClick={() => signIn()}>
-              Log In
-            </button>
+            <button className="btn my-4">Log In</button>
           </div>
           <p>
             You don't have an account yet?{" "}

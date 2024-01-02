@@ -35,12 +35,12 @@ export default function Suggestions() {
       </div>
       <div className="bg-red-300 flex justify-center gap-32">
         <div className="flex flex-col justify-center">
-          <h2 className="text-violet-700">Test 1</h2>
-          <p>Subtitle 1</p>
+          <h2 className="text-violet-700">100+</h2>
+          <p>Quizzes</p>
         </div>
         <div className="flex flex-col justify-center">
-          <h2 className="text-yellow-700">Test 2</h2>
-          <p>Subtitle 2</p>
+          <h2 className="text-yellow-700">FREE</h2>
+          <p>To create and explore</p>
         </div>
       </div>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 280">

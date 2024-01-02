@@ -3,11 +3,16 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function Signup() {
-  const [password, setPassword] = useState("password");
-
+  const [visibility, setVisibility] = useState("password");
   function toggleVisibility() {
-    password === "password" ? setPassword("text") : setPassword("password");
+    visibility === "password"
+      ? setVisibility("text")
+      : setVisibility("password");
   }
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <main className="flex min-h-fit flex-col items-center justify-center py-10">
@@ -23,8 +28,9 @@ export default function Signup() {
             autoComplete="username"
             required
             className="input input-bordered text-slate-500 focus:text-slate-900 w-full max-w-xs"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
-
           <label className="w-full text-left">
             E-mail:<span className="text-red-500 active">*</span>{" "}
           </label>
@@ -34,16 +40,20 @@ export default function Signup() {
             autoComplete="email"
             required
             className="input input-bordered text-slate-500 focus:text-slate-900 w-full max-w-xs"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label className="w-full text-left relative">
             Password:<span className="text-red-500 active">*</span>{" "}
             <input
-              type={password}
+              type={visibility}
               placeholder="Password"
               required
               className="input input-bordered text-slate-500 focus:text-slate-900 w-full max-w-xs mt-2"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
-            {password === "text" ? (
+            {visibility === "text" ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 height="21"
@@ -68,7 +78,7 @@ export default function Signup() {
             )}
           </label>
           <label className="label cursor-pointer">
-            Accept the terms of service
+            I accept the terms of service
             <span className="text-red-500 active">*</span>{" "}
             <input
               className="checkbox bg-slate-100 w-4 h-4 rounded ml-2"
