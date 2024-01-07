@@ -1,8 +1,46 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
+  const router = useRouter();
+
+  const [signUpData, setSignUpData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    checkbox: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setSignUpData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMessage("");
+    const res = await fetch("/api/Users", {
+      method: "POST",
+      body: JSON.stringify({ signUpData }),
+      "content-type": "application/json",
+    });
+
+    if (!res.ok) {
+      const response = await res.json();
+      setErrorMessage(response.message);
+    } else {
+      router.refresh();
+      router.push("/");
+    }
+  };
+
   const [visibility, setVisibility] = useState("password");
   function toggleVisibility() {
     visibility === "password"
@@ -10,48 +48,54 @@ export default function Signup() {
       : setVisibility("password");
   }
 
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   return (
     <main className="flex min-h-fit flex-col items-center justify-center py-10">
       <div className="card w-96 bg-blue-500 text-primary-content">
-        <form className="card-body items-center text-center">
+        <form
+          onSubmit={handleSubmit}
+          method="POST"
+          className="card-body items-center text-center"
+        >
           <h2 className="card-title">Sign Up</h2>
           <label className="w-full text-left">
             Username:<span className="text-red-500 active">*</span>{" "}
           </label>
           <input
+            id="name"
+            name="name"
             type="text"
             placeholder="Username"
             autoComplete="username"
             required
             className="input input-bordered text-slate-500 focus:text-slate-900 w-full max-w-xs"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={signUpData.name}
+            onChange={handleChange}
           />
           <label className="w-full text-left">
             E-mail:<span className="text-red-500 active">*</span>{" "}
           </label>
           <input
+            id="email"
+            name="email"
             type="email"
             placeholder="E-mail"
             autoComplete="email"
             required
             className="input input-bordered text-slate-500 focus:text-slate-900 w-full max-w-xs"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={signUpData.email}
+            onChange={handleChange}
           />
           <label className="w-full text-left relative">
             Password:<span className="text-red-500 active">*</span>{" "}
             <input
+              id="password"
+              name="password"
               type={visibility}
               placeholder="Password"
               required
               className="input input-bordered text-slate-500 focus:text-slate-900 w-full max-w-xs mt-2"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={signUpData.password}
+              onChange={handleChange}
             />
             {visibility === "text" ? (
               <svg
@@ -81,9 +125,13 @@ export default function Signup() {
             I accept the terms of service
             <span className="text-red-500 active">*</span>{" "}
             <input
+              id="checkbox"
+              name="checkbox"
               className="checkbox bg-slate-100 w-4 h-4 rounded ml-2"
               type="checkbox"
               required
+              checked={signUpData.checkbox}
+              onChange={handleChange}
             />
           </label>
 
@@ -97,6 +145,7 @@ export default function Signup() {
             </Link>
           </p>
         </form>
+        <p className="text-red-500">{errorMessage}</p>
       </div>
     </main>
   );

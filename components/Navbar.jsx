@@ -1,6 +1,9 @@
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { options } from "@/app/api/auth/[...nextauth]/options";
 
-export default function Navbar() {
+const Navbar = async () => {
+  const session = await getServerSession(options);
   return (
     <header className="navbar bg-base-100 px-24">
       <div className="flex-1">
@@ -13,21 +16,35 @@ export default function Navbar() {
           <li>
             <Link href="/">Home</Link>
           </li>
-          <li>
-            <details>
-              <summary>Make Your Quiz</summary>
-              <ul className="p-2 bg-base-100 rounded-t-none">
-                <li>
-                  <Link href="/signup">SignUp</Link>
-                </li>
-                <li>
-                  <Link href="/login">LogIn</Link>
-                </li>
-              </ul>
-            </details>
-          </li>
+          {!session ? (
+            <li>
+              <details>
+                <summary>Make Your Quiz</summary>
+
+                <ul className="p-2 bg-base-100 rounded-t-none">
+                  <li>
+                    <Link href="/signup">SignUp</Link>
+                  </li>
+                  <li>
+                    <Link href="/api/auth/signin">LogIn</Link>
+                  </li>
+                </ul>
+              </details>
+            </li>
+          ) : (
+            <>
+              <li className="text-blue-600">
+                <Link href="/dashboard">Account</Link>
+              </li>
+              <li className="text-red-600">
+                <Link href="/api/auth/signout?callbackUrl=/">LogOut</Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </header>
   );
-}
+};
+
+export default Navbar;
