@@ -37,26 +37,28 @@ export const options = {
       clientSecret: process.env.GOOGLE_Secret,
     }),
     CredentialsProvider({
-      name: "Credentials",
+      name: "credentials",
       credentials: {
-        email: {
-          label: "email:",
-          type: "text",
-          placeholder: "your-email",
-        },
-        password: {
-          label: "password:",
-          type: "password",
-          placeholder: "your-password",
-        },
+        // email: {
+        //   label: "email:",
+        //   type: "text",
+        //   placeholder: "your-email",
+        // },
+        // password: {
+        //   label: "password:",
+        //   type: "password",
+        //   placeholder: "your-password",
+        // },
       },
       async authorize(credentials) {
+        const { email, password } = credentials;
+
         console.log(credentials);
         await connectDatabase();
 
         try {
           const foundUser = await User.findOne({
-            email: credentials.email,
+            email: email,
           }).lean();
 
           if (foundUser) {
@@ -77,6 +79,9 @@ export const options = {
       },
     }),
   ],
+  pages: {
+    signIn: "/login",
+  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {

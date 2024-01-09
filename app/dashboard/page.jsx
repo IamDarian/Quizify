@@ -7,7 +7,7 @@ const Dashboard = async () => {
   const session = await getServerSession(options);
 
   if (!session) {
-    redirect("/api/auth/signin?callbackUrl=/dashboard");
+    redirect("/login?callbackUrl=/dashboard");
   }
 
   return (

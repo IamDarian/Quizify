@@ -26,7 +26,7 @@ const Navbar = async () => {
                     <Link href="/signup">SignUp</Link>
                   </li>
                   <li>
-                    <Link href="/api/auth/signin">LogIn</Link>
+                    <Link href="/login">LogIn</Link>
                   </li>
                 </ul>
               </details>
